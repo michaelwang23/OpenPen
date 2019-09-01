@@ -12,7 +12,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/openpenDB", {
+//mongoose.connect("mongodb://localhost:27017/openpenDB", {
+mongoose.connect("mongodb+srv://admin-michael:Test123@cluster0-sajsa.mongodb.net/openpenDB", {
   useNewUrlParser: true
 });
 
