@@ -27,20 +27,38 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
             <li id="home"><a href="index">Home</a></li>
-            <li id="about" class = "active"><a href="about">About</a></li>
-            <li><a href="summarize" onclick="" id="about">Summarize</a></li>
+            <li id="about"><a href="about">About</a></li>
+            <li class="active" ><a href="summarize" onclick="">Summarize</a></li>
           </ul>
         </div>
       </div>
     </nav>
-    <p id = "about-section"> 
-    OpenPen is a website created by UC Berkeley CS Student Michael Wang
-    </p>
 
-    <ul>
-        <li>Implemented HTML, CSS w/ Bootstrap, Javascript, and EJS to create a friendly front-end interface for users to chat and check past messages</li>
-        <li>Utilized Node.JS w/ Express to set up the routing along with MongoDB and Mongoose to create the database for the chat history</li>
-        <li>Used Git for version control and deployed the web application via Heroku </li>
-      </ul>
+    <div class="modal-body-row">
+        <h5 style="margin-left: 5%"> This page is helpful for summarizing long texts </h5>
+        <form method = "post" action="/summarizeText" >
+        <div class="col-md-6">
+                <textarea type="text" name="text" style="height:100px; margin-left:5%; width: 500px; display:block;" placeholder="Your story you want summarized"></textarea>
+                <input type="submit" class="btn btn-primary" style="margin-top:3%; margin-left:5%" >
+        </div>
+        <div class="col-md-6">
+                <% newEntries.forEach(function(item){ %>
+                    <div >
+                    <p><b>Original</b>: <%=item.original%></p>
+                    <p><b>Summarized:</b> <%=item.new%></p>
+                    </div>
+                  <% }) %>
+        </div>
+
+        </form>
+
+
+
+
+    
+
+    
+    
+
   </body>
 </html>

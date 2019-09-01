@@ -35,8 +35,21 @@ const listSchema = {
 
 const list = mongoose.model("List", listSchema);
 
+const summarizedSchema = {
+  original: String,
+  new: String
+}
+
+const Summary = mongoose.model("Summary", summarizedSchema)
+
+
 
 app.get('/', function (req, res){
+
+  Summary.deleteMany({}, function(err){
+    if (err) console.log(err);
+  });
+
   Entry.find({}, function(err, foundItems) {
     res.render('index', {
       newEntries: foundItems,
@@ -44,6 +57,7 @@ app.get('/', function (req, res){
       message: ""
     });
   });
+
 });
 
 app.get('/index', function(req, res){
@@ -53,6 +67,47 @@ app.get('/index', function(req, res){
 app.get('/about', function(req, res){
   res.render('about');
 });
+
+app.get('/summarize', function(req, res){
+    Summary.find({}, function(err, foundItems){
+      res.render('summarize', {
+        newEntries: foundItems
+      })
+    })
+
+})
+
+app.post('/summarizeText', function(req, res){
+  const text = req.body.text;
+
+  var AYLIENTextAPI = require('aylien_textapi');
+  var textapi = new AYLIENTextAPI({
+    application_id: "46c10558",
+    application_key: "03f5ba53494a7e60b7ec3346d3e004ac"
+  });
+
+  textapi.summarize({
+    title: "Insurance",
+    text: text,
+    sentences_number: 3
+  }, 
+  function(error, response) {
+    if (error === null) {
+      summarizedText = response.sentences
+      summarizedText = summarizedText.toString()
+
+      var item = new Summary ({
+        original: req.body.text,
+        new: summarizedText
+      });
+      item.save();
+      res.redirect('/summarize')
+    }
+    else {
+      console.log(error)
+    }
+  });
+})
 
 app.post('/contact', function(req, res){
   const entryName = req.body.txtName;
@@ -71,6 +126,8 @@ app.post('/delete', function(req, res){
   });
   res.redirect("/");
 });
+
+
 
 let port = process.env.PORT 
 if (port == null || port == "") {
