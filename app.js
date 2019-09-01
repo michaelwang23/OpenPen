@@ -2,6 +2,7 @@ var express = require('express');
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+
 var app = express();
 
 
@@ -10,6 +11,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.static("public"));
+
 
 //mongoose.connect("mongodb://localhost:27017/openpenDB", {
 mongoose.connect("mongodb+srv://admin-michael:Test123@cluster0-sajsa.mongodb.net/openpenDB", {
@@ -138,3 +140,4 @@ if (port == null || port == "") {
 app.listen(port, function() {
   console.log("Server started");
 });
+

@@ -27,8 +27,8 @@
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li class="active" id="home"><a href="index">Home</a></li>
-          <li><a href="about" onclick="" id="about">About</a></li>
           <li><a href="summarize" onclick="" id="about">Summarize</a></li>
+          <li><a href="about" onclick="" id="about">About</a></li>
         </ul>
       </div>
     </div>
@@ -51,7 +51,7 @@
 
           <% newEntries.forEach(function(item){ %>
             <div >
-            <p><%=item.name%> : <%=item.message%> </p>
+            <p><%=item.name%>: <%=item.message%> </p>
             </div>
           <% }) %>
         </div>
@@ -75,4 +75,7 @@
 </div>
 
 </body>
+
+<script type="module" src="/js/script.js"></script>
+
 </html>
