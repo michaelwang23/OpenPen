@@ -88,3 +88,7 @@ footer {
   font-weight: bold;
   color: black;
 }
+
+.navbar-toggle{
+  background-color: black;
+}
