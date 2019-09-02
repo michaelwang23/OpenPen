@@ -34,3 +34,57 @@ footer {
   margin-top: 20px;
 }
 
+.navbar.navbar-inverse{
+  background-color: #ffffff;
+  border-bottom: 0px;
+  border-top: 0px;
+}
+
+#summarize{
+  color: purple
+}
+
+#summarize:hover{
+  background-color: purple;
+  color: white;
+}
+
+#summarize.active{
+  background-color: purple;
+  color: white;
+}
+
+#home{
+  color: green
+}
+
+#home:hover{
+  background-color: green;
+  color: white;
+}
+
+#home.active{
+  background-color: green;
+  color: white;
+}
+
+#about{
+  color: blue
+}
+
+#about:hover{
+  background-color: blue;
+  color: white
+}
+
+#about:active{
+  background-color: blue;
+  color: white
+}
+
+.inactiveLink {
+  pointer-events: none;
+  cursor: default;
+  font-weight: bold;
+  color: black;
+}

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="../css/styles.css">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -22,29 +22,33 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index">OpenPen</a>
+          <a class="navbar-brand inactiveLink" href="index">OpenPen</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li id="home"><a href="index">Home</a></li>
-            <li><a href="summarize" onclick="" id="about">Summarize</a></li>
-            <li id="about" class = "active"><a href="about">About</a></li>
+            <li><a href="index" id="home">Home</a></li>
+            <li><a href="summarize" id="summarize">Summarize</a></li>
+            <li><a href="about" id="about" class="active">About</a></li>
           </ul>
         </div>
       </div>
     </nav>
-    <p id = "about-section"> 
-    OpenPen is a website created by UC Berkeley CS Student Michael Wang
-    </p>
+    <div style = "margin: 20px 20px 20px">
+      <h6>OpenPen is a website created by UC Berkeley CS Student Michael Wang</h6>
+      <table>
+        <tr>
+          <td> <img src="img/profile.JPG" alt="profile pic" height="250" width="250"> </td>
+          <td>
+            <ul>
+              <li>Implemented HTML, CSS w/ Bootstrap, Javascript, and EJS to create a friendly front-end interface for users to chat and check past messages</li>
+              <li>Utilized Node.JS w/ Express to set up the routing along with MongoDB and Mongoose to create the database for the chat history</li>
+              <li>Implemented the Aylien Text Analysis API to analyze the main idea of a message, provide summaries of longer messages, and filter out negative language </li>
+              <li>Used Git for version control and deployed the web application via Heroku </li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </div>
 
-    <img style = "margin-left: 2%" src="img/profile.JPG" alt="profile pic" height="250" width="250">
-
-
-    <ul>
-        <li>Implemented HTML, CSS w/ Bootstrap, Javascript, and EJS to create a friendly front-end interface for users to chat and check past messages</li>
-        <li>Utilized Node.JS w/ Express to set up the routing along with MongoDB and Mongoose to create the database for the chat history</li>
-        <li>Implemented the Aylien Text Analysis API to analyze the main idea of a message, provide summaries of longer messages, and filter out negative language </li>
-        <li>Used Git for version control and deployed the web application via Heroku </li>
-      </ul>
   </body>
 </html>
