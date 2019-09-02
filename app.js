@@ -1,10 +1,11 @@
 var express = require('express');
+
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+var AYLIENTextAPI = require('aylien_textapi');
 
 
 var app = express();
-
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
@@ -44,11 +45,20 @@ const summarizedSchema = {
 
 const Summary = mongoose.model("Summary", summarizedSchema)
 
+const errorSchema = {
+  message: String
+}
+
+const Error = mongoose.model("Error", errorSchema)
 
 
 app.get('/', function (req, res){
 
   Summary.deleteMany({}, function(err){
+    if (err) console.log(err);
+  });
+
+  Error.deleteMany({}, function(err){
     if (err) console.log(err);
   });
 
@@ -60,6 +70,8 @@ app.get('/', function (req, res){
     });
   });
 
+
+
 });
 
 app.get('/index', function(req, res){
@@ -68,6 +80,15 @@ app.get('/index', function(req, res){
 
 app.get('/about', function(req, res){
   res.render('about');
+});
+
+app.get('/error', function(req, res){
+  Error.find({}, function(err, foundItems){
+    res.render('error', {
+      message: foundItems[0].message
+    });
+  })
+  
 });
 
 app.get('/summarize', function(req, res){
@@ -81,45 +102,83 @@ app.get('/summarize', function(req, res){
 
 app.post('/summarizeText', function(req, res){
   const text = req.body.text;
-
-  var AYLIENTextAPI = require('aylien_textapi');
   var textapi = new AYLIENTextAPI({
     application_id: "46c10558",
     application_key: "03f5ba53494a7e60b7ec3346d3e004ac"
   });
 
-  textapi.summarize({
-    title: "Insurance",
-    text: text,
-    sentences_number: 3
+  //find the main concept with concepts
+  textapi.concepts({
+      text: text
   }, 
   function(error, response) {
     if (error === null) {
-      summarizedText = response.sentences
-      summarizedText = summarizedText.toString()
-
-      var item = new Summary ({
-        original: req.body.text,
-        new: summarizedText
+      var arr = []
+      Object.keys(response.concepts).forEach(function(concept) {
+        var surfaceForms = response.concepts[concept].surfaceForms.map(function(sf) {
+          return sf['string'];
+        });
+        arr.push(surfaceForms);
       });
-      item.save();
-      res.redirect('/summarize')
+      var title = arr[0].toString();
+      textapi.summarize({
+        title: title,
+        text: text,
+        sentences_number: 3
+      }, 
+      function(error, response) {
+        if (error === null) {
+          summarizedText = response.sentences
+          summarizedText = summarizedText.toString()
+      
+          var item = new Summary ({
+            original: req.body.text,
+            new: summarizedText
+          });
+          item.save();
+          res.redirect('/summarize')
+        }
+        else {
+          console.log(error)
+        }
+      });
     }
-    else {
-      console.log(error)
-    }
-  });
+  })
 })
+
 
 app.post('/contact', function(req, res){
   const entryName = req.body.txtName;
   const entryMessage = req.body.txtMsg;
-  var item = new Entry({
-    name: entryName,
-    message: entryMessage
+
+  var textapi = new AYLIENTextAPI({
+    application_id: "46c10558",
+    application_key: "03f5ba53494a7e60b7ec3346d3e004ac"
   });
-  item.save();
-  res.redirect("/");
+
+  textapi.sentiment({
+    text: entryMessage,
+    mode: 'tweet'
+  }, 
+  function(error, response) {
+    if (error === null) {
+      if (response.polarity === "negative"){
+        var item = new Error ({
+          message: req.body.txtMsg
+        });
+        item.save();
+        res.redirect("/error");
+      }
+      else {
+        var item = new Entry({
+          name: entryName,
+          message: entryMessage
+        });
+        item.save();
+        res.redirect("/");
+      }
+    }
+  });
 });
 
 app.post('/delete', function(req, res){
