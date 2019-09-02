@@ -84,13 +84,9 @@ app.get('/about', function(req, res){
 });
 
 app.get('/error', function(req, res){
-  Error.find({}, function(err, foundItems){
-    res.render('error', {
-      message: foundItems[0].message
-    });
-  })
-  
-});
+  res.render('error')
+})
+
 
 app.get('/summarize', function(req, res){
     Summary.find({}, function(err, foundItems){
@@ -164,10 +160,6 @@ app.post('/contact', function(req, res){
   function(error, response) {
     if (error === null) {
       if (response.polarity === "negative"){
-        var item = new Error ({
-          message: req.body.txtMsg
-        });
-        item.save();
         res.redirect("/error");
       }
       else {

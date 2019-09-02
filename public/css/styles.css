@@ -44,44 +44,44 @@ footer {
 }
 
 #summarize{
-  color: purple
+  color: #f2dd52
 }
 
 #summarize:hover{
-  background-color: purple;
+  background-color: #f2dd52;
   color: white;
 }
 
 #summarize.active{
-  background-color: purple;
+  background-color: #f2dd52;
   color: white;
 }
 
 #home{
-  color: green
+  color: #74a3ed
 }
 
 #home:hover{
-  background-color: green;
+  background-color: #74a3ed;
   color: white;
 }
 
 #home.active{
-  background-color: green;
+  background-color: #74a3ed;
   color: white;
 }
 
 #about{
-  color: blue
+  color: #f56962
 }
 
 #about:hover{
-  background-color: blue;
+  background-color: #f56962;
   color: white
 }
 
-#about:active{
-  background-color: blue;
+#about.active{
+  background-color: #f56962;
   color: white
 }
 
